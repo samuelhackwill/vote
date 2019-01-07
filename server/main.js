@@ -35,14 +35,13 @@ Meteor.methods({
 		}else{
 			throw new Meteor.Error("badPassWord", "On dirait que c'est pas le bon mot de passe");
 		}
-},
+	},
 
-'pushCred'(_mail, _name){
+ 	'unConnectClaire'(){
+		Users.update(Users.find({mail:'clairesas@free.fr'}).fetch()[0]._id, { $set: { connected: false }} , { upsert: true })
+	},
+
+/*	'pushCred'(_mail, _name){
 	Users.insert({ mail: _mail, name: _name });
-}
+	}*/
 })
-
-
-/*'pushCred'(_mail, _name){
-	Users.insert({ mail: _mail, name: _name });
-}*/

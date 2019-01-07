@@ -23,7 +23,7 @@ Tracker.autorun(() => {
 Template.svg.onCreated(function helloOnCreated() {
 	Vote = new Mongo.Collection('vote');
 	BannedChairs = new Mongo.Collection('bannedChairs');
-	console.log("client side collection created")
+	// console.log("client side collection created")
 
 });
 
@@ -33,7 +33,7 @@ Template.svg.helpers({
   },
 
   toggleVisible(id){
-  	console.log("getting bob ", id)
+  	// console.log("getting bob ", id)
   	if(Vote.find({name:id}).fetch()[0].connected){
   		return "block"
   	}else{
@@ -42,7 +42,7 @@ Template.svg.helpers({
   },
 
   toggleVotePour(id){
-  	console.log("getting vote pour", id)
+  	// console.log("getting vote pour", id)
   	if(Vote.find({name:id}).fetch()[0].yorn){
   		return 1
   	}else{
@@ -51,7 +51,7 @@ Template.svg.helpers({
   },  
 
   toggleVoteContre(id){
-  	console.log("getting vote contre", id)
+  	// console.log("getting vote contre", id)
   	if(Vote.find({name:id}).fetch()[0].yorn){
   		return 0
   	}else{
@@ -71,7 +71,7 @@ Template.svg.events({
   	if (BannedChairs.findOne({nr:number})) {
   		return
   	}else{
-	  	console.log("chair clicked", number)
+	  	// console.log("chair clicked", number)
 	  	document.getElementById("diagContainer").style.display="block";
 	  	setTimeout(function(){
 		  	document.getElementById("diagContainer").style.opacity=1;
@@ -80,16 +80,16 @@ Template.svg.events({
   },
 
   'click .bonhomme'(event, instance){
-  	console.log("ho ho t'as cliqué sur un bonhomme ", event.currentTarget.id.substr(1))
+  	// console.log("ho ho t'as cliqué sur un bonhomme ", event.currentTarget.id.substr(1))
   	var result = getCookie("enableClick")
 
   	if(result===Vote.find({name:"M"+event.currentTarget.id.substr(1)}).fetch()[0].who){
   		tempYorn = Vote.find({name:"M"+event.currentTarget.id.substr(1)}).fetch()[0].yorn
   		tempYorn =! tempYorn
 		Vote.update(Vote.find({name:"M"+event.currentTarget.id.substr(1)}).fetch()[0]._id, { $set: { yorn: tempYorn },});
-		console.log("yorn? ",tempYorn)
+		// console.log("yorn? ",tempYorn)
   	}else{
-  		console.log("c'est pas toi t'a pas le droit!")
+  		// console.log("c'est pas toi t'a pas le droit!")
   	}
   }
 });
@@ -98,8 +98,8 @@ Template.dialog.events({
 	'click #send'(instance){
 		if(Session.get('sending')){return}else{
 		Session.set('sending', true)
-		console.log(document.getElementById("diagMail").value)
-		console.log(document.getElementById("diagName").value)
+		// console.log(document.getElementById("diagMail").value)
+		// console.log(document.getElementById("diagName").value)
 
 		// là faut checker que
 
@@ -110,11 +110,11 @@ Template.dialog.events({
             if(error){
 				switch(error.error){
 					case 500 :
-						console.log("uh oh probably bad mail");
+						// console.log("uh oh probably bad mail");
 						alert("ah ben flûte on dirait que cet email n'est pas présent dans ma base de données. ou alors le serveur est planté mais bon c'est moins vraisemblable")
 					break;
 					case "badPassWord":
-						console.log("uh oh bad pwd")
+						// console.log("uh oh bad pwd")
 						alert("ah ouais cette adresse mail est bien dans la DB mais par contre c'est pas le bon nom a priori.")
 					break;
 					case "alreadyConnected":
@@ -122,7 +122,7 @@ Template.dialog.events({
 					break;
 				}
 			}else{
-				console.log("ok get in ", number)
+				// console.log("ok get in ", number)
 				Vote.update(Vote.find({name:"M"+number}).fetch()[0]._id, { $set: { connected: true },});
 				BannedChairs.insert({nr:number})
 				setCookie("enableClick", diagName.value, 30)		
@@ -177,12 +177,12 @@ Template.dialog.events({
 } 
 
 getEventElement = function(event){
-	console.log(event.currentTarget.id.substr(1))
+	// console.log(event.currentTarget.id.substr(1))
 }
 
 
 window.onkeydown = function(event){
-	console.log("KEYDOWN ", event.keyCode)
+	// console.log("KEYDOWN ", event.keyCode)
 
 	if(event.keyCode==27){
 		//echap
