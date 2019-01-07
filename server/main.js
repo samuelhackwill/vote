@@ -36,4 +36,13 @@ Meteor.methods({
 			throw new Meteor.Error("badPassWord", "On dirait que c'est pas le bon mot de passe");
 		}
 },
+
+'pushCred'(_mail, _name){
+	Users.insert({ mail: _mail, name: _name });
+}
 })
+
+
+/*'pushCred'(_mail, _name){
+	Users.insert({ mail: _mail, name: _name });
+}*/
